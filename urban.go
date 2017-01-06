@@ -7,5 +7,6 @@ import (
 
 func main() {
 	wordToLookup := os.Args[1]
-	fmt.Println(wordToLookup)
+	definition := LookupWordDefinition(wordToLookup)
+	fmt.Println(definition)
 }
