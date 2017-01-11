@@ -16,7 +16,7 @@ func main() {
 	numberOfResults := *countPtr
 	definitions, _ := api.LookupWordDefinition(wordToLookup)
 	if numberOfResults != 0 && len(definitions.List) != 0 {
-		fmt.Printf("\n Results for: %s \n", wordToLookup)
+		fmt.Printf("\nResults for: %s \n", wordToLookup)
 		for index := 1; index <= numberOfResults; index++ {
 			if len(definitions.List) < index {
 				break
