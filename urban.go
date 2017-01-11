@@ -2,13 +2,29 @@ package main
 
 import (
 	"fmt"
-	"os"
+
+	"flag"
 
 	"github.com/mtklitgaard/go-urban/api"
 )
 
 func main() {
-	wordToLookup := os.Args[1]
-	definition := api.LookupWordDefinition(wordToLookup)
-	fmt.Println(definition)
+	wordPtr := flag.String("word", "foo", "Word you want to lookup")
+	countPtr := flag.Int("count", 5, "Number of definitions you would like to see")
+	flag.Parse()
+	wordToLookup := *wordPtr
+	numberOfResults := *countPtr
+	definitions, _ := api.LookupWordDefinition(wordToLookup)
+	if numberOfResults != 0 && len(definitions.List) != 0 {
+		fmt.Printf("\n Results for: %s \n", wordToLookup)
+		for index := 1; index <= numberOfResults; index++ {
+			if len(definitions.List) < index {
+				break
+			}
+			fmt.Printf("\n\nResult: %v \n", index)
+			fmt.Println(definitions.List[index-1].Definition)
+		}
+	} else {
+		fmt.Println("You got no results")
+	}
 }

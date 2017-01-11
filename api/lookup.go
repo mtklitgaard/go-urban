@@ -8,18 +8,16 @@ import (
 )
 
 // LookupWordDefinition looks up definition
-func LookupWordDefinition(word string) (definition string) {
+func LookupWordDefinition(word string) (urbanResponse data.UrbanResponse, err error) {
 	resp, err := http.Get("http://api.urbandictionary.com/v0/define?term=" + word)
 	if err != nil {
-		definition = "Something went blegh!"
+		return
 	}
 	defer resp.Body.Close()
 
-	var urbanResponse data.UrbanResponse
-
-	if err := json.NewDecoder(resp.Body).Decode(&urbanResponse); err != nil {
-		definition = "Something went wrong parsing shit"
+	if errorInResponse := json.NewDecoder(resp.Body).Decode(&urbanResponse); errorInResponse != nil {
+		err = errorInResponse
+		return
 	}
-	definition = urbanResponse.List[0].Definition
 	return
 }
