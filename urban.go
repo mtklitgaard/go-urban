@@ -21,8 +21,11 @@ func main() {
 			if len(definitions.List) < index {
 				break
 			}
+			result := definitions.List[index-1]
 			fmt.Printf("\n\nResult: %v \n", index)
-			fmt.Println(definitions.List[index-1].Definition)
+			fmt.Println(result.Definition)
+			fmt.Println("Examples:")
+			fmt.Println(result.Example)
 		}
 	} else {
 		fmt.Println("You got no results")
