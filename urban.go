@@ -10,10 +10,12 @@ import (
 
 func main() {
 	countPtr := flag.Int("count", 5, "Number of definitions you would like to see")
+	showExamplesPtr := flag.Bool("examples", false, "Show examples if you want them.")
 	flag.Parse()
 	args := flag.Args()
 	wordFromCommand := args[0]
 	numberOfResults := *countPtr
+	showExamples := *showExamplesPtr
 
 	definitions, _ := api.LookupWordDefinition(wordFromCommand)
 
@@ -26,10 +28,16 @@ func main() {
 			result := definitions.List[index-1]
 			fmt.Printf("\n\nResult: %v \n", index)
 			fmt.Println(result.Definition)
-			fmt.Println("Examples:")
-			fmt.Println(result.Example)
+			printExamples(showExamples, result.Example)
 		}
 	} else {
 		fmt.Println("You got no results")
+	}
+}
+
+func printExamples(showExamples bool, example string) {
+	if showExamples {
+		fmt.Println("Examples:")
+		fmt.Println(example)
 	}
 }
