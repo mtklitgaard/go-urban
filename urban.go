@@ -9,14 +9,16 @@ import (
 )
 
 func main() {
-	wordPtr := flag.String("word", "foo", "Word you want to lookup")
 	countPtr := flag.Int("count", 5, "Number of definitions you would like to see")
 	flag.Parse()
-	wordToLookup := *wordPtr
+	args := flag.Args()
+	wordFromCommand := args[0]
 	numberOfResults := *countPtr
-	definitions, _ := api.LookupWordDefinition(wordToLookup)
+
+	definitions, _ := api.LookupWordDefinition(wordFromCommand)
+
 	if numberOfResults != 0 && len(definitions.List) != 0 {
-		fmt.Printf("\nResults for: %s \n", wordToLookup)
+		fmt.Printf("\nResults for: %s \n", wordFromCommand)
 		for index := 1; index <= numberOfResults; index++ {
 			if len(definitions.List) < index {
 				break
